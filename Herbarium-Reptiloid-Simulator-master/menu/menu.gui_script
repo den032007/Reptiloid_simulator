@@ -1,0 +1,71 @@
+local monarch = require "monarch.monarch"
+local lang = require "lang"
+local savedata = { last_level = 1 , current_level = 1 }
+local save_file = sys.get_save_file("gamedata", "gamedata")
+
+local function erase_max_level(self)
+	gamedata = sys.load(save_file)
+	gamedata.last_level = 1
+	gamedata.current_level = 1
+	sys.save(save_file, gamedata)
+end
+
+
+function init(self)	
+	--erase_max_level()
+	
+	for nodename, text in pairs(lang.menu[lang.current()]) do
+		gui.set_text(gui.get_node(nodename), text)
+	end
+
+	
+	
+	self.buttons = {
+		new_game = {
+			node = gui.get_node "new_game", 
+			action = function() monarch.show(hash "level_select") end
+		}
+		,
+		tutorial = {
+			node = gui.get_node "tutorial",
+			action = function() monarch.show(hash "game", nil, { tutorial = true }) end
+		},
+		quit = {
+			node = gui.get_node "quit",
+			action = function() msg.post("@system:", "exit", { code = 0 }) end
+		}
+	}
+
+
+	local gamedata = sys.load(save_file)
+	if next(gamedata) == nil  then
+		sys.save(save_file, savedata)
+		gui.set_text(gui.get_node("new_game"), "Новая игра")
+	else
+		if gamedata.last_level == 1 then
+			gui.set_text(gui.get_node("new_game"), "Новая игра")
+		else
+			gui.set_text(gui.get_node("new_game"), "Продолжить")
+		end
+	end
+
+	sound.play "loader:/sound#menu_music"
+	msg.post(".", "acquire_input_focus")
+end
+
+function final(self)
+	sound.stop "loader:/sound#menu_music"
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash "click" and action.pressed then
+		sound.play "loader:/sound#click"
+	elseif action_id == hash "click" and action.released then
+		print(action_id)
+		for _, button in pairs(self.buttons) do
+			if gui.pick_node(button.node, action.x, action.y) then
+				button.action(self)
+			end
+		end
+	end
+end

@@ -1,0 +1,78 @@
+images {
+  image: "/assets/red_planet.png"
+}
+images {
+  image: "/assets/planets/Planet_1.png"
+}
+images {
+  image: "/assets/planets/Planet_10.png"
+}
+images {
+  image: "/assets/planets/Planet_11.png"
+}
+images {
+  image: "/assets/planets/Planet_12.png"
+}
+images {
+  image: "/assets/planets/Planet_13.png"
+}
+images {
+  image: "/assets/planets/Planet_14.png"
+}
+images {
+  image: "/assets/planets/Planet_15.png"
+}
+images {
+  image: "/assets/planets/Planet_16.png"
+}
+images {
+  image: "/assets/planets/Planet_17.png"
+}
+images {
+  image: "/assets/planets/Planet_18.png"
+}
+images {
+  image: "/assets/planets/Planet_19.png"
+}
+images {
+  image: "/assets/planets/Planet_2.png"
+}
+images {
+  image: "/assets/planets/Planet_20.png"
+}
+images {
+  image: "/assets/planets/Planet_21.png"
+}
+images {
+  image: "/assets/planets/Planet_22.png"
+}
+images {
+  image: "/assets/planets/Planet_1.png"
+}
+images {
+  image: "/assets/planets/Planet_3.png"
+}
+images {
+  image: "/assets/planets/Planet_4.png"
+}
+images {
+  image: "/assets/planets/Planet_5.png"
+}
+images {
+  image: "/assets/planets/Planet_6.png"
+}
+images {
+  image: "/assets/planets/Planet_7.png"
+}
+images {
+  image: "/assets/planets/Planet_8.png"
+}
+images {
+  image: "/assets/planets/Planet_9.png"
+}
+images {
+  image: "/assets/earth.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0

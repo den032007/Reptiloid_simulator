@@ -1,0 +1,57 @@
+images {
+  image: "/assets/gui/colba_svetliy_fon.png"
+}
+images {
+  image: "/assets/gui/space_for_colba.png"
+}
+images {
+  image: "/assets/gui/left.png"
+}
+images {
+  image: "/assets/gui/kek3.png"
+}
+images {
+  image: "/assets/gui/Menu_pauses.png"
+}
+images {
+  image: "/assets/gui/Dialog_window.png"
+}
+images {
+  image: "/assets/gui/sad_boy.png"
+}
+images {
+  image: "/assets/gui/Reptiloid_tyan.png"
+}
+images {
+  image: "/assets/gui/mouse.png"
+}
+images {
+  image: "/assets/opened_level.jpg"
+}
+images {
+  image: "/assets/not_opened_level.jpg"
+}
+images {
+  image: "/assets/gui/green_opened_72x72.jpg"
+}
+images {
+  image: "/assets/gui/green_selected_72x72.jpg"
+}
+images {
+  image: "/assets/gui/grey_not_selected_72x72.jpg"
+}
+images {
+  image: "/assets/gui/longline.jpg"
+}
+images {
+  image: "/assets/gui/back_to_menu.jpg"
+}
+images {
+  image: "/assets/gui/main_pic.jpg"
+}
+images {
+  image: "/assets/gui/start.jpg"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0

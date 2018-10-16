@@ -1,0 +1,7 @@
+local monarch = require "monarch.monarch"
+
+function init(self)
+	local screen = go.get("#screen_proxy", "screen_id")
+	print(screen)
+	monarch.show(screen)
+end

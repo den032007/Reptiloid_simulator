@@ -1,0 +1,32 @@
+key_trigger {
+  input: KEY_SPACE
+  action: "fastforward"
+}
+key_trigger {
+  input: KEY_ESC
+  action: "pause"
+}
+key_trigger {
+  input: KEY_R
+  action: "replay"
+}
+key_trigger {
+  input: KEY_SPACE
+  action: "next"
+}
+key_trigger {
+  input: KEY_ESC
+  action: "back"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_LEFT
+  action: "space"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_RIGHT
+  action: "void"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_LEFT
+  action: "click"
+}

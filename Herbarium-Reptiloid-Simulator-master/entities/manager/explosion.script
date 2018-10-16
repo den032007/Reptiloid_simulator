@@ -1,0 +1,6 @@
+function on_message(self, message_id, message, sender)
+	if message_id == hash "hit" then
+		local pos = go.get_world_position(sender)
+		factory.create("#explosion_factory", pos)
+	end
+end

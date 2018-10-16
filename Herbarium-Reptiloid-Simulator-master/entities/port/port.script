@@ -1,0 +1,77 @@
+local global = require "global"
+
+local function calc_sin_cps(from, to)
+	local mid = vmath.vector3((from.x + to.x)/2, (from.y + to.y)/2, 0)
+	local mid1 = vmath.vector3((from.x + mid.x)/2, (from.y + mid.y)/2, 0)
+	local mid2 = vmath.vector3((to.x + mid.x)/2, (to.y + mid.y)/2, 0)
+
+	local dist1 = (to - from) * 0.25 
+
+	local perp = vmath.vector3(dist1.y, -dist1.x, 0)
+
+--	local perp = vmath.cross(
+--		vmath.normalize(direction),
+--		vmath.vector3(0, 0, 1))
+
+	return {
+		from,
+		mid1 + perp,
+		mid,
+		mid2 - perp,
+		to
+	}
+end
+
+function on_message(self, message_id, message, sender)
+	local ship_props = { speed = 0 }
+	if message_id == hash "spawn_ship" then
+		assert(#global.planets > 0)
+
+		-- Creating new ship
+		if not message.destination then
+			local planet_id = math.random(#global.planets)
+			local planet = global.planets[planet_id]
+			message.destination = go.get_world_position(planet)
+		end
+		
+		if message.properties ~= nil then
+			if message.properties.speed ~= nil then
+				speed_modificator = message.properties.speed
+				ship_props.speed = global.ship_properties.speed * speed_modificator
+			end
+		else
+			ship_props = global.ship_properties
+		end
+
+		pprint(ship_props)
+		
+		local ship_type = message.ship_type
+		if ship_type == "normal" then
+			local props = { [hash "/ship"] = ship_props }
+			local ship_id = collectionfactory.create("#factory", nil, nil, props)
+			
+			-- Attaching radar to its ship
+			local radar_url = msg.url(ship_id[hash "/radar"])
+			radar_url.fragment = "script"
+			go.set(radar_url, "ship", ship_id[hash "/ship"])
+			-- Dispatching ship
+			msg.post(ship_id[hash "/ship"], "redirect_ship", { destination = message.destination, cps = cps })
+
+		elseif ship_type == "jumper" then
+			pprint("jumper")
+			
+		elseif ship_type == "fat_ship" then
+			local props = { [hash "/fat_ship"] = ship_props }
+ 			local ship_id = collectionfactory.create("#fat_ship_factory", nil, nil, props)
+		
+			-- Attaching radar to its ship
+			local radar_url = msg.url(ship_id[hash "/radar_fat"])
+			radar_url.fragment = "script"
+			go.set(radar_url, "ship", ship_id[hash "/fat_ship"])
+			
+			-- Dispatching ship
+			msg.post(ship_id[hash "/fat_ship"], "redirect_ship", { destination = message.destination, cps = cps })
+		end	
+			
+	end
+end

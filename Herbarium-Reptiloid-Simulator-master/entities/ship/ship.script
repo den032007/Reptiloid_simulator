@@ -1,0 +1,84 @@
+go.property("speed", 10)
+go.property("prev_stop", vmath.vector3())
+go.property("alert", false)
+
+local function assert_tracer(self)
+	if not self.tracer then return end
+
+	timer.cancel(self.tracer)
+
+	for impulse in pairs(self.impulses) do
+		go.delete(impulse)
+	end
+end
+
+local function finish_flight(self)
+	assert_tracer(self)
+
+	if self.is_last_flight then
+		msg.post("game:/manager", "mission_done", { alert = self.alert })
+		go.delete(".", true)
+	else
+		msg.post("game:/manager", "flight_done")
+	end
+end
+
+
+local function send_impulse(self, destination)
+	assert_tracer(self)
+
+	self.impulses = {}
+
+	local origin = go.get_world_position()
+	local direction = destination - origin
+	local distance = vmath.length(direction)
+	local duration = distance / self.speed / 6
+	local rotation = -math.atan2(direction.x, direction.y)
+
+	self.tracer = timer.delay(0.5, true,
+	function()
+		local impulse = factory.create("game:/manager#impulse_factory", origin)
+		self.impulses[impulse] = true
+		go.animate(impulse, "position", go.PLAYBACK_ONCE_FORWARD, destination, go.EASING_LINEAR, duration, 0,
+		function() go.delete(impulse); self.impulses[impulse] = nil end)
+
+		go.set_rotation(vmath.quat_rotation_z(rotation), impulse)
+	end)
+end
+
+function final(self)
+	assert_tracer(self)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash "trigger_response" then
+		print(message_id, message.own_group)
+		if message.own_group == hash "ship" then
+			msg.post("game:/manager", "hit")
+			sound.play "loader:/sound#explosion"
+			go.delete(".", true)
+		elseif message.own_group == hash "radar" then
+			if self.alarm then
+				return
+			end
+			self.alarm = true
+			sound.play "loader:/sound#alert"
+			msg.post("game:/manager", "suspicion")
+		end
+
+	elseif message_id == hash "redirect_ship" then
+		local direction = message.destination - go.get_world_position()
+		local distance = vmath.length(direction)
+		local duration = distance / self.speed
+		self.is_last_flight = message.is_last_flight
+		self.prev_stop = go.get_world_position()
+
+		local angle = math.pi / 4 - math.atan2(direction.x, direction.y)
+		local rotation = vmath.quat_rotation_z(angle)
+		go.set_rotation(rotation)
+
+		send_impulse(self, message.destination)
+
+		go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, message.destination, go.EASING_LINEAR, duration, 0, finish_flight)
+	end
+end

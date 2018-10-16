@@ -1,0 +1,49 @@
+local moku = require "moku.moku"
+local global = require "global"
+
+go.property("tilemap", msg.url())
+go.property("layer", hash(""))
+
+local moku_ids = {
+	SPACE = 0,
+	VOID  = 1,
+	RESERVED = 17,
+}
+
+local function on_new_cell(args)
+	if args.on_edge then
+		args.cell.moku_id = moku_ids.VOID
+	end
+end
+
+function init(self)
+	global.grid = moku.new_from_tm(self.tilemap, self.layer, 16, 16, on_new_cell)
+	global.grid.moku_ids = moku_ids
+	moku.set_autotile(global.grid, moku_ids.VOID, moku.at_algorithm.SIMPLE, true, true, false)
+	moku.autotile_map(global.grid)
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Remove this function if not needed
+end
+
+function on_input(self, action_id, action)
+	-- Add input-handling code here
+	-- Remove this function if not needed
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Remove this function if not needed
+end

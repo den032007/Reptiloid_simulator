@@ -1,0 +1,67 @@
+local global = require "global"
+local monarch = require "monarch.monarch"
+
+function init(self)
+	self.visible_stress = global.stress
+	self.visual_timer = nil
+
+	self.green = gui.get_node "green"
+	self.orange = gui.get_node "orange"
+	self.red = gui.get_node "red"
+
+end
+
+local function redraw(self, stress)
+	local green_stress = math.max(0, math.min(stress, 3))
+	local orange_stress = math.max(3, math.min(stress, 6))
+	local red_stress = math.max(6, math.min(stress, 9))
+
+	gui.play_flipbook(self.green, "green_stress_" .. green_stress)
+	gui.play_flipbook(self.orange, "orange_stress_" .. orange_stress)
+	gui.play_flipbook(self.red, "red_stress_" .. red_stress)
+end
+
+local function reduce_timer(self, handle)
+	if global.stress == self.visible_stress then
+		timer.cancel(handle)
+		self.visual_timer = nil
+		return
+	end
+	local step = global.stress > self.visible_stress and 1 or -1
+
+	self.visible_stress = self.visible_stress + step
+
+	local stress = math.min(9, math.max(self.visible_stress, 0))
+
+	redraw(self, stress)
+end
+
+local function gameover_timer(self)
+	if not self.timer then
+		self.timer = timer.delay(0.75, false,
+		function()
+			monarch.show(hash "gameover")
+		end)
+	end
+end
+
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash "mission_done" then
+		if not message.alert then
+			global.stress = global.stress - 1
+		end
+	elseif message_id == hash "hit" then
+		global.stress = global.stress + 3
+	end
+
+	global.stress = math.max(0, math.min(9, global.stress))
+
+	if global.stress == 9 then
+		gameover_timer(self)
+	end
+
+	if not self.visual_timer then
+		self.visual_timer = timer.delay(0.125, true, reduce_timer)
+	end
+end

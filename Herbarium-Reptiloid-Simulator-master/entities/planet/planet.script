@@ -1,0 +1,7 @@
+local global = require "global"
+
+function init(self)
+	local index = math.random(22)
+	msg.post("#sprite", "play_animation", { id = hash("Planet_" .. index) })
+	table.insert(global.planets, go.get_id())
+end

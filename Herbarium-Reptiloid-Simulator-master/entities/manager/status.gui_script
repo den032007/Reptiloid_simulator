@@ -1,0 +1,42 @@
+local global = require "global"
+
+function init(self)
+	self.timer = nil
+	self.alive = true
+end
+
+local green  = vmath.vector3(0.5, 1, 0.5)
+local yellow = vmath.vector3(0.85, 0.75, 0.25)
+local red    = vmath.vector3(1, 0.5, 0.5)
+
+function on_message(self, message_id, message, sender)
+	if not self.alive then
+		return
+	end
+	if message_id == hash "suspicion" then
+		gui.set_color(gui.get_node "box", yellow)
+		if self.timer then
+			timer.cancel(self.timer)
+		end
+		self.timer = timer.delay(2, false,
+		function()
+			gui.set_color(gui.get_node "box", green)
+		end)
+--	elseif message_id == hash "calm_down" then
+--		gui.set_color(gui.get_node "box", green)
+	elseif message_id == hash "hit" then
+		gui.set_color(gui.get_node "box", red)
+		if self.timer then
+			timer.cancel(self.timer)
+		end
+		self.timer = timer.delay(2, false,
+		function()
+			gui.set_color(gui.get_node "box", green)
+		end)
+	end
+
+	if global.stress > global.max_stress then
+		self.alive = false
+		gui.set_color(gui.get_node "box", green)
+	end
+end

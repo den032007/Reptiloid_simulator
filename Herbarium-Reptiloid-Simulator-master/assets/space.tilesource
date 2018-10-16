@@ -1,0 +1,110 @@
+image: "/assets/bordered_void.png"
+tile_width: 16
+tile_height: 16
+tile_margin: 0
+tile_spacing: 0
+collision: "/assets/bordered_void.png"
+material_tag: "tile"
+convex_hulls {
+  index: 0
+  count: 8
+  collision_group: "void"
+}
+convex_hulls {
+  index: 8
+  count: 4
+  collision_group: "void"
+}
+convex_hulls {
+  index: 12
+  count: 4
+  collision_group: "void"
+}
+convex_hulls {
+  index: 16
+  count: 4
+  collision_group: "void"
+}
+convex_hulls {
+  index: 20
+  count: 4
+  collision_group: "void"
+}
+convex_hulls {
+  index: 24
+  count: 3
+  collision_group: "void"
+}
+convex_hulls {
+  index: 27
+  count: 4
+  collision_group: "void"
+}
+convex_hulls {
+  index: 31
+  count: 3
+  collision_group: "void"
+}
+convex_hulls {
+  index: 34
+  count: 4
+  collision_group: "void"
+}
+convex_hulls {
+  index: 38
+  count: 4
+  collision_group: "void"
+}
+convex_hulls {
+  index: 42
+  count: 4
+  collision_group: "void"
+}
+convex_hulls {
+  index: 46
+  count: 4
+  collision_group: "void"
+}
+convex_hulls {
+  index: 50
+  count: 4
+  collision_group: "void"
+}
+convex_hulls {
+  index: 54
+  count: 3
+  collision_group: "void"
+}
+convex_hulls {
+  index: 57
+  count: 4
+  collision_group: "void"
+}
+convex_hulls {
+  index: 61
+  count: 3
+  collision_group: "void"
+}
+convex_hulls {
+  index: 64
+  count: 8
+  collision_group: ""
+}
+convex_hulls {
+  index: 72
+  count: 4
+  collision_group: ""
+}
+convex_hulls {
+  index: 76
+  count: 0
+  collision_group: ""
+}
+convex_hulls {
+  index: 76
+  count: 0
+  collision_group: ""
+}
+collision_groups: "void"
+extrude_borders: 0
+inner_padding: 0

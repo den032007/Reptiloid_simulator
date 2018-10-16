@@ -1,0 +1,55 @@
+local moku = require "moku.moku"
+local global = require "global"
+
+go.property("cell_size", 16)
+
+local spray_brush = {
+	vmath.vector3(0, 0, 0),
+	vmath.vector3(-1, 0, 0),
+	vmath.vector3(0, -1, 0),
+	vmath.vector3(-1, -1, 0),
+}
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Remove this function if not needed
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash "space" then
+		local x, y, w, h = tilemap.get_bounds("game:/universe#grid")
+		local world_position = go.get_world_position("game:/universe#grid")
+		local min_position = world_position + vmath.vector3(x - 1, y - 1, 0) * self.cell_size
+		local max_position = world_position + min_position + vmath.vector3(w, h, 0) * self.cell_size
+
+		if action.x > max_position.x or action.x < min_position.x or action.y > max_position.y or action.y < min_position.y then
+			return
+		end
+
+		local action_position = vmath.vector3(action.x, action.y, 0)
+		action_position = (action_position - min_position) * (1 / self.cell_size)
+
+		for i, pixel in ipairs(spray_brush) do
+			local pos = vmath.vector3(
+			math.floor(action_position.x + pixel.x + 1),
+			math.floor(action_position.y + pixel.y + 1),
+			0)
+			if global.grid[pos.x][pos.y].moku_id == global.grid.moku_ids.VOID then
+				if global.space <= 0 then return end
+				global.grid[pos.x][pos.y].moku_id = 0
+				moku.autotile_surrounding(global.grid, pos.x, pos.y)
+				global.space = global.space - 1
+				msg.post("game:/manager", "update_counter")
+			end
+		end
+	end
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Remove this function if not needed
+end

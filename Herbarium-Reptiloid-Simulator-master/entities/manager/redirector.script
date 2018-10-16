@@ -1,0 +1,6 @@
+function on_message(self, message_id, message, sender)
+	if message_id == hash "flight_done" then
+		local destination = go.get(sender, "prev_stop")
+		msg.post(sender, "redirect_ship", { destination = destination, is_last_flight = true })
+	end
+end

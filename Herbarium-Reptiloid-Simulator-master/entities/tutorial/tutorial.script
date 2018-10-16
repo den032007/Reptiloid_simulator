@@ -1,0 +1,16 @@
+local flow = require "m.flow"
+local lang = require "lang"
+
+local function session()
+	flow.delay(5)
+	go.animate("#hint", "color.w", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_OUTCUBIC, 5)
+end
+
+function init(self)
+	label.set_text("#hint", lang.controls[lang.current()])
+	self.flow = flow(session)
+end
+
+function final(self)
+	flow.stop(self.flow)
+end

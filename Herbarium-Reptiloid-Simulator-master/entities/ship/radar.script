@@ -1,0 +1,16 @@
+go.property("ship", msg.url())
+
+function init(self)
+	go.animate(".", "euler.z", go.PLAYBACK_LOOP_FORWARD, 360, go.EASING_LINEAR, 1)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash "trigger_response" then
+		local ship_script = msg.url(self.ship)
+		ship_script.fragment = "script"
+		go.set(ship_script, "alert", true)
+		msg.post(self.ship, message_id, message)
+
+		msg.post("#sprite", "play_animation", { id = hash "radar-1_alarm" })
+	end
+end

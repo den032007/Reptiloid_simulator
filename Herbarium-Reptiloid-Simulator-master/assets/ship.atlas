@@ -1,0 +1,28 @@
+images {
+  image: "/assets/ship_1.png"
+}
+images {
+  image: "/assets/fat_ship_1.png"
+}
+images {
+  image: "/assets/Shuttle.png"
+}
+animations {
+  id: "impulse"
+  images {
+    image: "/assets/impulse/Dot.png"
+  }
+  images {
+    image: "/assets/impulse/Dot_2.png"
+  }
+  images {
+    image: "/assets/impulse/Dot_3.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 10
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0

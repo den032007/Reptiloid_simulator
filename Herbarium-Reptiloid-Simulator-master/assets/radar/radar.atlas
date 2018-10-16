@@ -1,0 +1,9 @@
+images {
+  image: "/assets/radar/radar-1.png"
+}
+images {
+  image: "/assets/radar/radar-1_alarm.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0

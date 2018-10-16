@@ -1,0 +1,23 @@
+local monarch = require "monarch.monarch"
+local lang = require "lang"
+
+function init(self)
+	for nodename, text in pairs(lang.pause[lang.current()]) do
+		gui.set_text(gui.get_node(nodename), text)
+	end
+
+	msg.post("loader:/game#collectionproxy", "set_time_step", {factor = 0, mode = 1})
+	msg.post(".", "acquire_input_focus")
+end
+
+function final(self)
+--	msg.post("loader:/game#collectionproxy", "set_time_step", {factor = 1, mode = 1})
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash "pause" and action.pressed then
+		monarch.back()
+	elseif action_id == hash "next" and action.pressed then
+		monarch.show(hash "menu", { clear = true, reload = true })
+	end
+end
