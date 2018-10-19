@@ -69,3 +69,39 @@ embedded_components {
     w: 1.0
   }
 }
+embedded_components {
+  id: "mc_ship_factory"
+  type: "collectionfactory"
+  data: "prototype: \"/entities/ship/mc_ship.collection\"\n"
+  "load_dynamically: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "two_step_ship_factory"
+  type: "collectionfactory"
+  data: "prototype: \"/entities/ship/two_step_ship.collection\"\n"
+  "load_dynamically: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}

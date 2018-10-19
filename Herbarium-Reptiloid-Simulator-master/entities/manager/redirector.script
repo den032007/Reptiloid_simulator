@@ -1,6 +1,12 @@
 function on_message(self, message_id, message, sender)
 	if message_id == hash "flight_done" then
 		local destination = go.get(sender, "prev_stop")
-		msg.post(sender, "redirect_ship", { destination = destination, is_last_flight = true })
+		msg.post(sender, "redirect_ship", { destination = {destination}})
+		
+		--local destination = go.get(sender, "prev_stop")
+		--msg.post(sender, "redirect_ship", { destination = {destination}, go_to_base = true})
+	elseif message_id == hash "point_done" then
+		local destination = go.get(sender, "next_stop") - go.get_world_position()
+		msg.post(sender, "redirect_ship", { destination = {destination}})
 	end
 end

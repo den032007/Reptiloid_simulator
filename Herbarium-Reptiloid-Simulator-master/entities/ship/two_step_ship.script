@@ -1,4 +1,4 @@
-go.property("speed", 10)
+go.property("speed", 5)
 go.property("base", vmath.vector3())
 go.property("next_stop", vmath.vector3())
 go.property("alert", false)
@@ -77,7 +77,7 @@ function on_message(self, message_id, message, sender)
 			self.max_fligh_counter = counter
 			self.destination_list = message.destination
 		end
-
+			
 		self.fligh_done = self.fligh_done + 1 
 
 		if self.fligh_done <= self.max_fligh_counter  then
@@ -89,7 +89,7 @@ function on_message(self, message_id, message, sender)
 
 		local direction = 0
 		direction = destination - go.get_world_position()
-
+		
 		local distance = vmath.length(direction)
 		local duration = distance / self.speed
 		local next_destination = destination

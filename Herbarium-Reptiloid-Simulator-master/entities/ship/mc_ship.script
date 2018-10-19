@@ -1,4 +1,4 @@
-go.property("speed", 10)
+go.property("speed", 5)
 go.property("base", vmath.vector3())
 go.property("next_stop", vmath.vector3())
 go.property("alert", false)
@@ -104,6 +104,7 @@ function on_message(self, message_id, message, sender)
 		go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, next_destination, go.EASING_LINEAR, duration, 0, finish_flight)
 	end
 end
+
 
 function init(self)
 	self.is_last_flight = false

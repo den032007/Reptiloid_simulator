@@ -1,5 +1,6 @@
 go.property("speed", 5)
-go.property("prev_stop", vmath.vector3())
+go.property("base", vmath.vector3())
+go.property("next_stop", vmath.vector3())
 go.property("alert", false)
 
 local function assert_tracer(self)
@@ -19,7 +20,7 @@ local function finish_flight(self)
 		msg.post("game:/manager", "mission_done", { alert = self.alert })
 		go.delete(".", true)
 	else
-		msg.post("game:/manager", "flight_done")
+		msg.post("game:/manager", "point_done")
 	end
 end
 
@@ -67,18 +68,48 @@ function on_message(self, message_id, message, sender)
 		end
 
 	elseif message_id == hash "redirect_ship" then
-		local direction = message.destination - go.get_world_position()
+		counter = 0
+		if self.settings_set == false then
+			self.settings_set = true
+			for i, key in pairs(message.destination) do
+				counter = counter + 1
+			end
+			self.max_fligh_counter = counter
+			self.destination_list = message.destination
+		end
+
+		self.fligh_done = self.fligh_done + 1 
+
+		if self.fligh_done <= self.max_fligh_counter  then
+			destination = self.destination_list[self.fligh_done] 
+		else
+			destination = self.base
+			self.is_last_flight = true
+		end
+
+		local direction = 0
+		direction = destination - go.get_world_position()
+
 		local distance = vmath.length(direction)
 		local duration = distance / self.speed
-		self.is_last_flight = message.is_last_flight
-		self.prev_stop = go.get_world_position()
+		local next_destination = destination
+		local flight_done = self.fligh_done
 
 		local angle = math.pi / 4 - math.atan2(direction.x, direction.y)
 		local rotation = vmath.quat_rotation_z(angle)
 		go.set_rotation(rotation)
 
-		send_impulse(self, message.destination)
+		send_impulse(self, next_destination)
 
-		go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, message.destination, go.EASING_LINEAR, duration, 0, finish_flight)
+		go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, next_destination, go.EASING_LINEAR, duration, 0, finish_flight)
 	end
+end
+
+function init(self)
+	self.is_last_flight = false
+	self.settings_set = false
+	self.destination_list = {}
+	self.base = go.get_world_position()
+	self.max_fligh_counter = 0
+	self.fligh_done = 0
 end

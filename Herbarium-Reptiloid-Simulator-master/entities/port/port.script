@@ -29,8 +29,9 @@ function on_message(self, message_id, message, sender)
 
 		-- Creating new ship
 		if not message.destination then
-			local planet_id = math.random(#global.planets)
-			local planet = global.planets[planet_id]
+			
+			local planet_id = math.random(#global.planet_pool)
+			local planet = global.planet_pool[planet_id]
 			message.destination = go.get_world_position(planet)
 		end
 		
@@ -55,7 +56,7 @@ function on_message(self, message_id, message, sender)
 			radar_url.fragment = "script"
 			go.set(radar_url, "ship", ship_id[hash "/ship"])
 			-- Dispatching ship
-			msg.post(ship_id[hash "/ship"], "redirect_ship", { destination = message.destination, cps = cps })
+			msg.post(ship_id[hash "/ship"], "redirect_ship", { destination = { message.destination }, cps = cps })
 
 		elseif ship_type == "jumper" then
 			pprint("jumper")
@@ -70,7 +71,40 @@ function on_message(self, message_id, message, sender)
 			go.set(radar_url, "ship", ship_id[hash "/fat_ship"])
 			
 			-- Dispatching ship
-			msg.post(ship_id[hash "/fat_ship"], "redirect_ship", { destination = message.destination, cps = cps })
+			msg.post(ship_id[hash "/fat_ship"], "redirect_ship", { destination = { message.destination }, cps = cps })
+
+		elseif ship_type == "mc_ship" then
+			local props = { [hash "/mc_ship"] = ship_props }
+			local ship_id = collectionfactory.create("#mc_ship_factory", nil, nil, props)
+
+			-- Attaching radar to its ship
+			local radar_url = msg.url(ship_id[hash "/radar_mac"])
+			radar_url.fragment = "script"
+			go.set(radar_url, "ship", ship_id[hash "/mc_ship"])
+
+			-- Dispatching ship
+			msg.post(ship_id[hash "/mc_ship"], "redirect_ship", { destination = {message.destination}, cps = cps })
+
+		elseif ship_type == "two_step_ship" then
+			local props = { [hash "/two_step_ship"] = ship_props }
+			local ship_id = collectionfactory.create("#two_step_ship_factory", nil, nil, props)
+			local destination_list = {}
+			
+			-- Attaching radar to its ship
+			local radar_url = msg.url(ship_id[hash "/radar_two_step"])
+			radar_url.fragment = "script"
+			go.set(radar_url, "ship", ship_id[hash "/two_step_ship"])
+
+			for i=1,2 do
+				local planet_id = math.random(#global.planet_pool)
+				local planet = global.planet_pool[planet_id]
+				local destination =  go.get_world_position(planet)
+				table.insert(destination_list, destination)
+			end
+			
+			
+			-- Dispatching ship
+			msg.post(ship_id[hash "/two_step_ship"], "redirect_ship", { destination = destination_list, cps = cps })
 		end	
 			
 	end

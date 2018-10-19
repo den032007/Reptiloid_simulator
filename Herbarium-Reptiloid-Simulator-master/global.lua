@@ -10,5 +10,6 @@ return {
 	},
 
 	planets = {},
+	planet_pool = {},
 	grid = nil, -- Filled at entities.manager.grid
 }

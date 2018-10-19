@@ -7,6 +7,12 @@ images {
 images {
   image: "/assets/Shuttle.png"
 }
+images {
+  image: "/assets/Mac_Shuttle.png"
+}
+images {
+  image: "/assets/Jumper.png"
+}
 animations {
   id: "impulse"
   images {

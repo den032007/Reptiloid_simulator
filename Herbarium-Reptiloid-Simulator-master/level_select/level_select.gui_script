@@ -22,7 +22,37 @@ local function set_level_name(level)
 	elseif level == "level6" then
 		gui.set_text(gui.get_node "level_text", "И снова Илон")
 	elseif level == "level7" then
-	gui.set_text(gui.get_node "level_text", "Кажется я понял почему место было вакантно")
+		gui.set_text(gui.get_node "level_text", "Кажется я понял почему место было вакантно")
+	elseif level == "level8" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level9" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level10" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level11" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level12" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level13" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level14" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level15" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level6" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level17" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level18" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level19" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level20" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level21" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
+	elseif level == "level22" then
+		gui.set_text(gui.get_node "level_text", "Название в разработке")
 end
 
 end
