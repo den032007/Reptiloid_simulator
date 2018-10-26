@@ -47,9 +47,6 @@ images {
   image: "/assets/planets/Planet_22.png"
 }
 images {
-  image: "/assets/planets/Planet_1.png"
-}
-images {
   image: "/assets/planets/Planet_3.png"
 }
 images {

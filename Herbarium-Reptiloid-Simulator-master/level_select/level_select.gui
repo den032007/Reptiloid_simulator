@@ -104,7 +104,7 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: "gui/main_pic"
+  texture: "gui/level1"
   id: "level_preview"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE

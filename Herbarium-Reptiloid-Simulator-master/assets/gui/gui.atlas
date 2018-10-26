@@ -47,10 +47,73 @@ images {
   image: "/assets/gui/back_to_menu.jpg"
 }
 images {
-  image: "/assets/gui/main_pic.jpg"
+  image: "/assets/gui/start.jpg"
 }
 images {
-  image: "/assets/gui/start.jpg"
+  image: "/assets/gui/level1.jpg"
+}
+images {
+  image: "/assets/gui/level10.jpg"
+}
+images {
+  image: "/assets/gui/level11.jpg"
+}
+images {
+  image: "/assets/gui/level12.jpg"
+}
+images {
+  image: "/assets/gui/level13.jpg"
+}
+images {
+  image: "/assets/gui/level14.jpg"
+}
+images {
+  image: "/assets/gui/level15.jpg"
+}
+images {
+  image: "/assets/gui/level16.jpg"
+}
+images {
+  image: "/assets/gui/level17.jpg"
+}
+images {
+  image: "/assets/gui/level18.jpg"
+}
+images {
+  image: "/assets/gui/level19.jpg"
+}
+images {
+  image: "/assets/gui/level2.jpg"
+}
+images {
+  image: "/assets/gui/level20.jpg"
+}
+images {
+  image: "/assets/gui/level21.jpg"
+}
+images {
+  image: "/assets/gui/level22.jpg"
+}
+images {
+  image: "/assets/gui/level3.jpg"
+}
+images {
+  image: "/assets/gui/level4.jpg"
+}
+images {
+  image: "/assets/gui/level5.jpg"
+}
+images {
+  image: "/assets/gui/level6.jpg"
+}
+images {
+  image: "/assets/gui/level7.jpg"
+}
+images {
+  image: "/assets/gui/level8.jpg"
+}
+images {
+  image: "/assets/gui/level9.jpg"
 }
 margin: 0
 extrude_borders: 0

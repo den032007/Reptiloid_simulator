@@ -10,9 +10,17 @@ local function erase_max_level(self)
 	sys.save(save_file, gamedata)
 end
 
+local function set_max_level(self)
+	gamedata = sys.load(save_file)
+	gamedata.last_level = 22
+	gamedata.current_level = 1
+	sys.save(save_file, gamedata)
+end
+
 
 function init(self)	
 	--erase_max_level()
+	--set_max_level()
 	
 	for nodename, text in pairs(lang.menu[lang.current()]) do
 		gui.set_text(gui.get_node(nodename), text)

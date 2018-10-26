@@ -24,6 +24,7 @@ end
 
 function on_message(self, message_id, message, sender)
 	local ship_props = { speed = 0 }
+	
 	if message_id == hash "spawn_ship" then
 		assert(#global.planets > 0)
 
@@ -58,8 +59,18 @@ function on_message(self, message_id, message, sender)
 			-- Dispatching ship
 			msg.post(ship_id[hash "/ship"], "redirect_ship", { destination = { message.destination }, cps = cps })
 
-		elseif ship_type == "jumper" then
-			pprint("jumper")
+		elseif ship_type == "jumper_ship" then
+   			local props = { [hash "/jumper_ship"] = ship_props }
+			local ship_id = collectionfactory.create("#jumper_factory", nil, nil, props)
+
+			-- Attaching radar to its ship
+			local radar_url = msg.url(ship_id[hash "/radar_jumper"])
+			radar_url.fragment = "script"
+			go.set(radar_url, "ship", ship_id[hash "/jumper_ship"])
+
+			-- Dispatching ship
+			msg.post(ship_id[hash "/jumper_ship"], "redirect_ship", { destination = { message.destination }, cps = cps })
+			
 			
 		elseif ship_type == "fat_ship" then
 			local props = { [hash "/fat_ship"] = ship_props }

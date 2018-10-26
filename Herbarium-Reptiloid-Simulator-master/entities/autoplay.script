@@ -1,6 +1,7 @@
 local flow = require "m.flow"
 local wait = flow
 local monarch = require "monarch.monarch"
+local moku = require "moku.moku"
 local global = require "global"
 local lang = require "lang"
 local clone = require "m.clone"
@@ -75,17 +76,31 @@ local function increase_level_counter(self, current_level)
 		sys.save(save_file, gamedata)
 	end	
 end
-	
+
+local function filter_space(cell)
+	return cell.moku_id == global.grid.moku_ids.SPACE
+end
+
+local function count_space()
+	local count = 0
+	for _ in moku.iterate_map(global.grid, filter_space) do
+		count = count + 1
+	end
+	return count
+end
+
 local function pour_off(self, count)
-	global.max_space = 110
-	global.space = 0
-	for i = 1, count do
+	local drawned_space = count_space()
+	add_space = global.space - drawned_space + count
+	for i = 1, add_space do
 		global.max_space = global.max_space + 1
 		global.space = global.space + 1
 		msg.post("game:/manager", "update_counter")
 		wait.delay(0.0425)
 	end
 end
+
+
 
 local function add_destinations(planet_pool, ...)
 	local urls = { ... }
@@ -120,7 +135,8 @@ local function tutorial(self)
 end
 
 local function level1(self, do_tutorial)
-	pour_off(self, 25)
+	say(lang.wave_1_start[lang.current()])
+	pour_off(self, 90)
 	msg.post("game:/manager", "update_counter")
 	local wait_tutorial_ship
 	local planet_pool = {}
@@ -135,19 +151,19 @@ local function level1(self, do_tutorial)
 end
 
 local function level2(self)
-	pour_off(self, 45)
+	say(lang.wave_2_start[lang.current()])
+	pour_off(self, 110)
 	msg.post("game:/manager", "update_counter")
 	local planet_pool = {}
-	wave_ships = { normal = 10}
+	wave_ships = { normal = 10 }
 	global.planet_pool = {"/planet1", "/planet2", "/planet3", "/planet4"}
-	say(lang.radar_hint[lang.current()])
-
 	wave(self, global.planet_pool, { speed = 1 }, 16, wave_ships)
 	say(lang.wave_2_end[lang.current()])
 end
 
 local function level3(self)
-	pour_off(self, 65)
+	say(lang.wave_3_start[lang.current()])
+	pour_off(self, 120)
 	local planet_pool = {}
 	global.planet_pool = { "planet1", "/planet2", "/planet3", "/planet4" }
 	wave_ships = { normal = 12}
@@ -157,174 +173,212 @@ local function level3(self)
 end
 
 local function level4(self)
-	pour_off(self, 85)
+	say(lang.wave_4_start[lang.current()])
+	pour_off(self, 140)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6"}
 	
 	wave_ships = { normal = 14 }
 	wave(self, global.planet_pool, { speed = 1 }, 15, wave_ships)
+	say(lang.wave_4_end[lang.current()])
 end
 
 local function level5(self)
-	pour_off(self, 105)
+	say(lang.wave_5_start[lang.current()])
+	pour_off(self, 160)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6"}
 	
 	wave_ships = { normal = 8, fat_ship  = 2 }
 	wave(self, global.planet_pool, { speed = 1 }, 14, wave_ships)
+	say(lang.wave_5_end[lang.current()])
 end
 
 local function level6(self)
-	pour_off(self, 125)
+	say(lang.wave_6_start[lang.current()])
+	pour_off(self, 180)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6" }
 	
 	wave_ships = { normal = 8, fat_ship  = 4 }
 	wave(self, global.planet_pool, { speed = 1,25 }, 14, wave_ships)
+	say(lang.wave_6_end[lang.current()])
 end
 
 local function level7(self)
-	pour_off(self, 145)
+	say(lang.wave_7_start[lang.current()])
+	pour_off(self, 200)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6"}
 	
 	wave_ships = { normal = 8, fat_ship  = 6 }
 	wave(self, global.planet_pool, { speed = 1,25 }, 13, wave_ships)
+	say(lang.wave_7_end[lang.current()])
 end
 
 local function level8(self)
-	pour_off(self, 165)
+	say(lang.wave_8_start[lang.current()])
+	pour_off(self, 220)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8"}
 	
 	wave_ships = { normal = 8, fat_ship  = 8 }
 	wave(self, global.planet_pool, { speed = 1,25 }, 13, wave_ships)
+	say(lang.wave_8_end[lang.current()])
 end
 
 local function level9(self)
-	pour_off(self, 185)
+	say(lang.wave_9_start[lang.current()])
+	pour_off(self, 240)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8"}
 	
 	wave_ships = { normal = 5, fat_ship  = 5, two_step_ship = 2}
 	wave(self, global.planet_pool, { speed = 1,25 }, 12, wave_ships)
+	say(lang.wave_9_end[lang.current()])
 end
 
 local function level10(self)
-	pour_off(self, 205)
+	say(lang.wave_10_start[lang.current()])
+	pour_off(self, 260)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8"}
 	
 	wave_ships = { normal = 5, fat_ship  = 5, two_step_ship = 4}
 	wave(self, global.planet_pool, { speed = 1,25 }, 12, wave_ships)
+	say(lang.wave_10_end[lang.current()])
 end
 
 local function level11(self)
-	pour_off(self, 210)
+	say(lang.wave_11_start[lang.current()])
+	pour_off(self, 270)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8"}
 
 	wave_ships = { normal = 5, fat_ship  = 5, two_step_ship = 6}
 	wave(self, global.planet_pool, { speed = 1,25 }, 11, wave_ships)
+	say(lang.wave_11_end[lang.current()])
 end
 
 local function level12(self)
-	pour_off(self, 215)
+	say(lang.wave_12_start[lang.current()])
+	pour_off(self, 275)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8", "planet9", "planet10"}
 	
 	wave_ships = { normal = 6, fat_ship  = 6, two_step_ship = 6 }
 	wave(self, global.planet_pool, { speed = 1,5 }, 11, wave_ships)
+	say(lang.wave_12_end[lang.current()])
 end
 
 local function level13(self)
-	pour_off(self, 220)
+	say(lang.wave_13_start[lang.current()])
+	pour_off(self, 280)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8", "planet9", "planet10"}
 	
 	wave_ships = { normal = 4, fat_ship  = 4, two_step_ship = 4, mc_ship = 2  }
 	wave(self, global.planet_pool, { speed = 1,5 }, 10, wave_ships)
+	say(lang.wave_13_end[lang.current()])
 end
 
 local function level14(self)
-	pour_off(self, 225)
+	say(lang.wave_14_start[lang.current()])
+	pour_off(self, 285)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8", "planet9", "planet10"}
 
 	wave_ships = { normal = 4, fat_ship  = 4, two_step_ship = 4, mc_ship = 4  }
 	wave(self, global.planet_pool, { speed = 1,5 }, 10, wave_ships)
+	say(lang.wave_14_end[lang.current()])
 end
 
 local function level15(self)
-	pour_off(self, 230)
+	say(lang.wave_15_start[lang.current()])
+	pour_off(self, 290)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8", "planet9", "planet10"}
 
-	wave_ships = { normal = 5, fat_ship  = 5, two_step_ship = 4, mc_ship = 4  }
+	wave_ships = { normal = 4, fat_ship  = 4, two_step_ship = 5, mc_ship = 5  }
 	wave(self, global.planet_pool, { speed = 1,5 }, 9, wave_ships)
+	say(lang.wave_15_end[lang.current()])
 end
 
 local function level16(self)
-	pour_off(self, 235)
+	say(lang.wave_16_start[lang.current()])
+	pour_off(self, 295)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8", "planet9", "planet10", "planet11", "planet12"}
 
 	wave_ships = { normal = 5, fat_ship  = 5, two_step_ship = 5, mc_ship = 5  }
 	wave(self, global.planet_pool, { speed = 1,5 }, 9, wave_ships)
+	say(lang.wave_16_end[lang.current()])
 end
 
 local function level17(self)
-	pour_off(self, 240)
+	say(lang.wave_17_start[lang.current()])
+	pour_off(self, 300)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8", "planet9", "planet10", "planet11", "planet12"}
 
-	wave_ships = { normal = 4, fat_ship  = 4, two_step_ship = 4, mc_ship = 4 }
+	wave_ships = { normal = 2, fat_ship  = 4, two_step_ship = 4, mc_ship = 4 , jumper_ship = 4 }
 	wave(self, global.planet_pool, { speed = 1,75 }, 8, wave_ships)
+	say(lang.wave_17_end[lang.current()])
 end
 
 local function level18(self)
-	pour_off(self, 245)
+	say(lang.wave_18_start[lang.current()])
+	pour_off(self, 305)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8", "planet9", "planet10", "planet11", "planet12"}
 
-	wave_ships = { normal = 4, fat_ship  = 4, two_step_ship = 5, mc_ship = 5  }
+	wave_ships = { normal = 2, fat_ship  = 4, two_step_ship = 5, mc_ship = 4 , jumper_ship = 5 }
 	wave(self, global.planet_pool, { speed = 1,75 }, 8, wave_ships)
+	say(lang.wave_18_end[lang.current()])
 end
 
 local function level19(self)
-	pour_off(self, 250)
+	say(lang.wave_19_start[lang.current()])
+	pour_off(self, 310)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8", "planet9", "planet10", "planet11", "planet12"}
 
-	wave_ships = { normal = 5, fat_ship  = 5, two_step_ship = 5, mc_ship = 5  }
+	wave_ships = { normal = 2, fat_ship  = 5, two_step_ship = 5, mc_ship = 5 , jumper_ship = 5  }
 	wave(self, global.planet_pool, { speed = 1,75 }, 7, wave_ships)
+	say(lang.wave_19_end[lang.current()])
 end
 
 local function level20(self)
-	pour_off(self, 255)
+	say(lang.wave_20_start[lang.current()])
+	pour_off(self, 315)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8", "planet9", "planet10", "planet11", "planet12", "planet13", "planet14"}
 
-	wave_ships = { normal = 6, fat_ship  = 6, two_step_ship = 6, mc_ship = 6  }
+	wave_ships = { normal = 2, fat_ship  = 6, two_step_ship = 6, mc_ship = 6  , jumper_ship = 6 }
 	wave(self, global.planet_pool, { speed = 1,75 }, 7, wave_ships)
+	say(lang.wave_20_end[lang.current()])
 end
 
 local function level21(self)
-	pour_off(self, 260)
+	say(lang.wave_21_start[lang.current()])
+	pour_off(self, 320)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8", "planet9", "planet10", "planet11", "planet12", "planet13", "planet14"}
 
-	wave_ships = { normal = 4, fat_ship  = 6, two_step_ship = 8, mc_ship = 6  }
+	wave_ships = { normal = 2, fat_ship  = 6, two_step_ship = 8, mc_ship = 6 , jumper_ship = 8  }
 	wave(self, global.planet_pool, { speed = 1,75 }, 6, wave_ships)
+	say(lang.wave_21_end[lang.current()])
 end
 
 local function level22(self)
-	pour_off(self, 270)
+	say(lang.wave_22_start[lang.current()])
+	pour_off(self, 330)
 	local planet_pool = {}
 	global.planet_pool = { "planet", "planet1", "/planet2", "/planet3", "/planet4", "/planet5", "planet6", "planet7", "planet8", "planet9", "planet10", "planet11", "planet12", "planet13", "planet14"}
 
-	wave_ships = { normal = 2, fat_ship  = 6, two_step_ship = 10, mc_ship = 8  }
+	wave_ships = { normal = 2, fat_ship  = 6, two_step_ship = 10 , mc_ship = 6 , jumper_ship = 10  }
 	wave(self, global.planet_pool, { speed = 2 }, 6, wave_ships)
+	say(lang.wave_22_end[lang.current()])
 end
 
 local function play_level(self, level, do_tutorial)
@@ -341,7 +395,6 @@ local function play_level(self, level, do_tutorial)
 	elseif level == 4 then
 		level4(self)
 		increase_level_counter(self, level)
-		monarch.show(monarch.top(), { reload = true }, monarch.data())
 	elseif level == 5 then
 		level5(self)
 		increase_level_counter(self, level)

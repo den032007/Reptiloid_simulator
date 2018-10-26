@@ -13,6 +13,9 @@ images {
 images {
   image: "/assets/Jumper.png"
 }
+images {
+  image: "/assets/Dragon_V2.png"
+}
 animations {
   id: "impulse"
   images {
@@ -28,6 +31,37 @@ animations {
   fps: 10
   flip_horizontal: 0
   flip_vertical: 0
+}
+animations {
+  id: "build_gate"
+  images {
+    image: "/assets/Building stargate_1.png"
+  }
+  images {
+    image: "/assets/Building stargate_2.png"
+  }
+  images {
+    image: "/assets/Building stargate_3.png"
+  }
+  images {
+    image: "/assets/Building stargate_4.png"
+  }
+  images {
+    image: "/assets/Building stargate_5.png"
+  }
+  images {
+    image: "/assets/Building stargate_6.png"
+  }
+  images {
+    image: "/assets/Building stargate_7.png"
+  }
+  images {
+    image: "/assets/Building stargate_8.png"
+  }
+  playback: PLAYBACK_ONCE_FORWARD
+  fps: 7
+  flip_horizontal: 0
+  flip_vertical: 1
 }
 margin: 0
 extrude_borders: 0
